@@ -40,13 +40,17 @@ body {
 }
 h1 {
   color: #052707;
-  font-size: 100px;
   text-align: center;
-  font-family: "Trebuchet MS", sans-serif;
-
-  /* "Oswald", "Gill Sans", "Gill Sans MT", "Trebuchet MS", sans-serif; */
   padding-top: 50px;
 }
+
+.oswald {
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 80px;
+}
+
 #eiklogo {
   height: 300px;
   display: flex;
