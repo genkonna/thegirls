@@ -298,7 +298,8 @@
           },
           {
             keywords: ["γεια", "hello", "hi"],
-            reply: "Γεια σου! Πώς μπορώ να σε βοηθήσω με την ψηφιακή σου ευεξία σήμερα;",
+            reply:
+              "Γεια σου! Πώς μπορώ να σε βοηθήσω με την ψηφιακή σου ευεξία σήμερα;",
           },
         ];
 
@@ -316,7 +317,7 @@
         function getReply(text) {
           const lower = text.toLowerCase();
           const match = replies.find((r) =>
-            r.keywords.some((k) => lower.includes(k))
+            r.keywords.some((k) => lower.includes(k)),
           );
           return match ? match.reply : fallback;
         }
