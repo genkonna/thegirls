@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="homepage.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Ενημερώνει τα κινητά να εμφανίζουν τη σελίδα στο σωστό τους μέγεθος-->
+
+    <title>DigiWell</title>
+
+    <!-- ===== Mini chat widget styles (mockup only, no backend) ===== -->
+    <style>
+      #dw-chat-toggle {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #2f9e8f;
+        color: #fff;
+        border: none;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        font-size: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1050;
+      }
+      #dw-chat-toggle:hover {
+        background: #268a7d;
+      }
+
+      #dw-chat-window {
+        position: fixed;
+        bottom: 96px;
+        right: 24px;
+        width: 320px;
+        max-width: calc(100vw - 32px);
+        height: 420px;
+        max-height: calc(100vh - 140px);
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 1050;
+        font-family: inherit;
+      }
+      #dw-chat-window.dw-open {
+        display: flex;
+      }
+
+      #dw-chat-header {
+        background: #2f9e8f;
+        color: #fff;
+        padding: 12px 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      #dw-chat-header strong {
+        font-size: 15px;
+      }
+      #dw-chat-header small {
+        display: block;
+        opacity: 0.85;
+        font-size: 11px;
+      }
+      #dw-chat-close {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        line-height: 1;
+      }
+
+      #dw-chat-messages {
+        flex: 1;
+        padding: 12px;
+        overflow-y: auto;
+        background: #f5f8f8;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .dw-msg {
+        max-width: 80%;
+        padding: 8px 12px;
+        border-radius: 14px;
+        font-size: 13.5px;
+        line-height: 1.35;
+      }
+      .dw-msg.bot {
+        background: #e6f2f0;
+        color: #1f3a36;
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+      }
+      .dw-msg.user {
+        background: #2f9e8f;
+        color: #fff;
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+      }
+
+      #dw-chat-form {
+        display: flex;
+        border-top: 1px solid #e2e2e2;
+        padding: 8px;
+        gap: 6px;
+      }
+      #dw-chat-input {
+        flex: 1;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 8px 12px;
+        font-size: 13.5px;
+        outline: none;
+      }
+      #dw-chat-send {
+        background: #2f9e8f;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        padding: 0 16px;
+        font-size: 13.5px;
+        cursor: pointer;
+      }
+      #dw-chat-send:hover {
+        background: #268a7d;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" id="nav">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">DigiWell</a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <!--Κρύβει το μενού στα κινητά και το ανοίγει μόνο όταν πατήσεις το κουμπί.-->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">Assistance</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Blog</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">Relaxation</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid p-0 text-center" id="eiklogo">
+      <!--Δημιουργεί μια λωρίδα χωρίς περιθώρια που πιάνει όλο το πλάτος της οθόνης.-->
+      <div class="row g-0 justify-content-center align-items-center">
+        <div class="col-6 col-md-3">
+          <!-- Ορίζει ότι στο κινητό κάθε εικόνα πιάνει $6/12$ του πλάτους (δηλαδή χωράνε 2 εικόνες ανά σειρά), ενώ στον υπολογιστή πιάνει $3/12$ (δηλαδή χωράνε και οι 4 στην ίδια σειρά).-->
+          <img src="lalala.png" class="img-fluid" alt="" />
+        </div>
+        <div class="col-6 col-md-3">
+          <img src="love.png" class="img-fluid" alt="DigiWell Logo" />
+        </div>
+        <div class="col-6 col-md-3">
+          <img src="blabla.png" class="img-fluid" alt="" />
+        </div>
+        <div class="col-6 col-md-3">
+          <img src="good.png" class="img-fluid" alt="DigiWell Logo" />
+        </div>
+      </div>
+    </div>
+    <div class="container text-center my-5">
+      <h1 class="oswald">DigiWell</h1>
+    </div>
+    <br />
+    <div class="container my-4" id="content">
+      <div class="row justify-content-center">
+        <div class="col-11 col-md-9 col-lg-8 text-center text-md-start"></div>
+        <!--Κεντράρει το κείμενο στο κινητό, αλλά το στοιχίζει αριστερά στον υπολογιστή.-->
+        <p class="lead-text"></p>
+        <p>
+          Η DigiWell είναι μια ιστοσελίδα που σε βοηθά να κατανοήσεις και να
+          βελτιώσεις τον τρόπο με τον οποίο χρησιμοποιείς την τεχνολογία στην
+          καθημερινότητά σου.
+        </p>
+        <p>
+          Μέσα από απλά και εύχρηστα εργαλεία, η DigiWell σου δίνει τη
+          δυνατότητα να παρακολουθείς τις ψηφιακές σου συνήθειες, να
+          αναγνωρίζεις συμπεριφορές που μπορεί να επηρεάζουν την καθημερινότητά
+          σου και να θέτεις μικρούς, ρεαλιστικούς στόχους για μια καλύτερη
+          ισορροπία.
+        </p>
+        <p>
+          Παράλληλα, μέσα από χρήσιμες συμβουλές, προτάσεις και διαδραστικό
+          περιεχόμενο, η DigiWell σε βοηθά να κάνεις πιο συνειδητές επιλογές
+          σχετικά με τον χρόνο που περνάς στις ψηφιακές συσκευές και τον τρόπο
+          που τις χρησιμοποιείς.
+        </p>
+        <p>
+          Στόχος μας είναι να σου προσφέρουμε πρακτικά εργαλεία και απλές λύσεις
+          που μπορούν να εφαρμοστούν εύκολα στην καθημερινότητά σου.
+        </p>
+        <p>
+          Με τη DigiWell, δεν χρειάζεται να αλλάξεις τα πάντα. Ξεκινάς με μικρά
+          βήματα, αποκτάς καλύτερη εικόνα των συνηθειών σου και δημιουργείς
+          σταδιακά μια καθημερινότητα που λειτουργεί καλύτερα για εσένα.
+        </p>
+      </div>
+    </div>
+
+    <!-- ===== Mini chat widget (mockup only, no backend) ===== -->
+    <button id="dw-chat-toggle" aria-label="Άνοιγμα βοηθού ψηφιακής ευεξίας">
+      💬
+    </button>
+
+    <div id="dw-chat-window">
+      <div id="dw-chat-header">
+        <div>
+          <strong>DigiWell Βοηθός</strong>
+          <small>Ρώτησέ με για ψηφιακή ευεξία</small>
+        </div>
+        <button id="dw-chat-close" aria-label="Κλείσιμο chat">✕</button>
+      </div>
+      <div id="dw-chat-messages">
+        <div class="dw-msg bot">
+          Γεια σου! 👋 Είμαι εδώ για να σε βοηθήσω με θέματα ψηφιακής ευεξίας.
+          Ρώτησέ με π.χ. για screen time, ύπνο ή κοινωνικά δίκτυα.
+        </div>
+      </div>
+      <form id="dw-chat-form">
+        <input
+          type="text"
+          id="dw-chat-input"
+          placeholder="Γράψε ένα μήνυμα..."
+          autocomplete="off"
+        />
+        <button type="submit" id="dw-chat-send">Αποστολή</button>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Simple front-end-only mock chatbot for the DigiWell mockup.
+      // No backend / API calls — just canned, keyword-based replies.
+      (function () {
+        const toggleBtn = document.getElementById("dw-chat-toggle");
+        const closeBtn = document.getElementById("dw-chat-close");
+        const chatWindow = document.getElementById("dw-chat-window");
+        const form = document.getElementById("dw-chat-form");
+        const input = document.getElementById("dw-chat-input");
+        const messages = document.getElementById("dw-chat-messages");
+
+        const replies = [
+          {
+            keywords: ["screen", "οθόνη", "χρόνος"],
+            reply:
+              "Καλή ιδέα να παρακολουθείς τον χρόνο οθόνης σου! Δοκίμασε να θέσεις ένα καθημερινό όριο και να κάνεις μικρά διαλείμματα κάθε 30-45 λεπτά.",
+          },
+          {
+            keywords: ["ύπνο", "υπνο", "sleep", "κοιμ"],
+            reply:
+              "Για καλύτερο ύπνο, δοκίμασε να αποφεύγεις τις οθόνες 30-60 λεπτά πριν κοιμηθείς — το μπλε φως μπορεί να επηρεάσει τον ύπνο σου.",
+          },
+          {
+            keywords: ["social", "κοινωνικ", "instagram", "tiktok", "facebook"],
+            reply:
+              "Τα κοινωνικά δίκτυα είναι εύκολο να «καταπιούν» χρόνο. Ένα μικρό βήμα: όρισε συγκεκριμένες ώρες τη μέρα για να τα ελέγχεις, αντί να τα ανοίγεις αυτόματα.",
+          },
+          {
+            keywords: ["στόχ", "goal"],
+            reply:
+              "Ξεκίνα με έναν μικρό, ρεαλιστικό στόχο — π.χ. 15 λεπτά λιγότερο screen time την ημέρα — και χτίσε πάνω σε αυτόν σταδιακά.",
+          },
+          {
+            keywords: ["γεια", "hello", "hi"],
+            reply: "Γεια σου! Πώς μπορώ να σε βοηθήσω με την ψηφιακή σου ευεξία σήμερα;",
+          },
+        ];
+
+        const fallback =
+          "Ευχαριστώ για το μήνυμα! (Αυτό είναι ένα demo chat — σύντομα θα συνδεθεί με πραγματικό βοηθό.) Δοκίμασε να ρωτήσεις για screen time, ύπνο, κοινωνικά δίκτυα ή στόχους.";
+
+        function addMessage(text, sender) {
+          const el = document.createElement("div");
+          el.className = "dw-msg " + sender;
+          el.textContent = text;
+          messages.appendChild(el);
+          messages.scrollTop = messages.scrollHeight;
+        }
+
+        function getReply(text) {
+          const lower = text.toLowerCase();
+          const match = replies.find((r) =>
+            r.keywords.some((k) => lower.includes(k))
+          );
+          return match ? match.reply : fallback;
+        }
+
+        toggleBtn.addEventListener("click", function () {
+          chatWindow.classList.toggle("dw-open");
+          if (chatWindow.classList.contains("dw-open")) {
+            input.focus();
+          }
+        });
+
+        closeBtn.addEventListener("click", function () {
+          chatWindow.classList.remove("dw-open");
+        });
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const text = input.value.trim();
+          if (!text) return;
+          addMessage(text, "user");
+          input.value = "";
+          setTimeout(function () {
+            addMessage(getReply(text), "bot");
+          }, 500);
+        });
+      })();
+    </script>
+  </body>
+</html>
