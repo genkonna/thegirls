@@ -4,13 +4,10 @@ body {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-size: 20px;
   text-align: left;
-<<<<<<< Updated upstream
-=======
 }
 
 .below {
   padding: 150px;
->>>>>>> Stashed changes
 }
 
 #header {
@@ -56,12 +53,9 @@ img {
 #navbar {
   color: rgb(26, 128, 48);
 }
-<<<<<<< Updated upstream
-=======
 
 #nav {
   background-color: #5b8661 !important;
   padding: 15px 30px;
   position: fixed;
 }
->>>>>>> Stashed changes
