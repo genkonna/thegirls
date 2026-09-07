@@ -5,9 +5,10 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="homepage.css" />
+    <link rel="stylesheet" href="general.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="home.css" />
 
     <title>DigiWell</title>
   </head>
@@ -103,5 +104,118 @@
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ===== Mini chat widget (mockup only, no backend) ===== -->
+    <button id="dw-chat-toggle" aria-label="Άνοιγμα βοηθού ψηφιακής ευεξίας">
+      💬
+    </button>
+
+    <div id="dw-chat-window">
+      <div id="dw-chat-header">
+        <div>
+          <strong>DigiWell Βοηθός</strong>
+          <small>Ρώτησέ με για ψηφιακή ευεξία</small>
+        </div>
+        <button id="dw-chat-close" aria-label="Κλείσιμο chat">✕</button>
+      </div>
+      <div id="dw-chat-messages">
+        <div class="dw-msg bot">
+          Γεια σου! 👋 Είμαι εδώ για να σε βοηθήσω με θέματα ψηφιακής ευεξίας.
+          Ρώτησέ με π.χ. για screen time, ύπνο ή κοινωνικά δίκτυα.
+        </div>
+      </div>
+      <form id="dw-chat-form">
+        <input
+          type="text"
+          id="dw-chat-input"
+          placeholder="Γράψε ένα μήνυμα..."
+          autocomplete="off"
+        />
+        <button type="submit" id="dw-chat-send">Αποστολή</button>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Simple front-end-only mock chatbot for the DigiWell mockup.
+      // No backend / API calls — just canned, keyword-based replies.
+      (function () {
+        const toggleBtn = document.getElementById("dw-chat-toggle");
+        const closeBtn = document.getElementById("dw-chat-close");
+        const chatWindow = document.getElementById("dw-chat-window");
+        const form = document.getElementById("dw-chat-form");
+        const input = document.getElementById("dw-chat-input");
+        const messages = document.getElementById("dw-chat-messages");
+
+        const replies = [
+          {
+            keywords: ["screen", "οθόνη", "χρόνος"],
+            reply:
+              "Καλή ιδέα να παρακολουθείς τον χρόνο οθόνης σου! Δοκίμασε να θέσεις ένα καθημερινό όριο και να κάνεις μικρά διαλείμματα κάθε 30-45 λεπτά.",
+          },
+          {
+            keywords: ["ύπνο", "υπνο", "sleep", "κοιμ"],
+            reply:
+              "Για καλύτερο ύπνο, δοκίμασε να αποφεύγεις τις οθόνες 30-60 λεπτά πριν κοιμηθείς — το μπλε φως μπορεί να επηρεάσει τον ύπνο σου.",
+          },
+          {
+            keywords: ["social", "κοινωνικ", "instagram", "tiktok", "facebook"],
+            reply:
+              "Τα κοινωνικά δίκτυα είναι εύκολο να «καταπιούν» χρόνο. Ένα μικρό βήμα: όρισε συγκεκριμένες ώρες τη μέρα για να τα ελέγχεις, αντί να τα ανοίγεις αυτόματα.",
+          },
+          {
+            keywords: ["στόχ", "goal"],
+            reply:
+              "Ξεκίνα με έναν μικρό, ρεαλιστικό στόχο — π.χ. 15 λεπτά λιγότερο screen time την ημέρα — και χτίσε πάνω σε αυτόν σταδιακά.",
+          },
+          {
+            keywords: ["γεια", "hello", "hi"],
+            reply:
+              "Γεια σου! Πώς μπορώ να σε βοηθήσω με την ψηφιακή σου ευεξία σήμερα;",
+          },
+        ];
+
+        const fallback =
+          "Ευχαριστώ για το μήνυμα! (Αυτό είναι ένα demo chat — σύντομα θα συνδεθεί με πραγματικό βοηθό.) Δοκίμασε να ρωτήσεις για screen time, ύπνο, κοινωνικά δίκτυα ή στόχους.";
+
+        function addMessage(text, sender) {
+          const el = document.createElement("div");
+          el.className = "dw-msg " + sender;
+          el.textContent = text;
+          messages.appendChild(el);
+          messages.scrollTop = messages.scrollHeight;
+        }
+
+        function getReply(text) {
+          const lower = text.toLowerCase();
+          const match = replies.find((r) =>
+            r.keywords.some((k) => lower.includes(k)),
+          );
+          return match ? match.reply : fallback;
+        }
+
+        toggleBtn.addEventListener("click", function () {
+          chatWindow.classList.toggle("dw-open");
+          if (chatWindow.classList.contains("dw-open")) {
+            input.focus();
+          }
+        });
+
+        closeBtn.addEventListener("click", function () {
+          chatWindow.classList.remove("dw-open");
+        });
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const text = input.value.trim();
+          if (!text) return;
+          addMessage(text, "user");
+          input.value = "";
+          setTimeout(function () {
+            addMessage(getReply(text), "bot");
+          }, 500);
+        });
+      })();
+    </script>
   </body>
 </html>
