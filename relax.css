@@ -1,12 +1,12 @@
-#relax {
-  place-items: bottom;
-  color: rgb(10, 82, 42);
-}
-
 #relax-image {
   place-items: bottom;
+  min-height: 1000px;
 }
 .img-fluid {
   place-items: middle;
   position: center;
+}
+#blabla {
+  width: 100%;
+  object-fit: cover;
 }
