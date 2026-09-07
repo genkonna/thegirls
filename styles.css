@@ -1,0 +1,39 @@
+body {
+  background-color: blanchedalmond;
+}
+body {
+  text-align: left;
+  margin: 100px;
+  color: rgb(1, 78, 36);
+}
+img {
+  width: 80%;
+  border-radius: 10%;
+  height: 80%;
+  /* item-size: */
+}
+
+h1 {
+  text-align: center;
+  margin: 100px;
+  color: rgb(1, 78, 36);
+}
+
+h2 {
+  color: rgb(1, 78, 36);
+  font-size: medium;
+}
+
+#paragraph-left {
+  text-align: left;
+}
+
+h3 {
+  color: rgb(1, 78, 36);
+  font-size: medium;
+}
+
+h4 {
+  color: rgb(1, 78, 36);
+  font-size: medium;
+}
