@@ -2,7 +2,7 @@ body {
   background-color: rgb(251, 243, 217) !important;
   color: indigo(900) !important;
   padding-top: 80px;
-  font-color: rgb(1, 78, 36);
+  color: rgb(1, 78, 36);
 }
 /* Navbar */
 

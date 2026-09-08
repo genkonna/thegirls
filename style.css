@@ -62,3 +62,36 @@ img {
 .subtitle {
   padding-left: 100px;
 }
+
+@media (max-width: 767px) {
+  #header {
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+
+  .subtitle {
+    padding-left: 0;
+  }
+
+  .row {
+    gap: 0;
+  }
+
+  .bellow .row {
+    flex-direction: column;
+    row-gap: 16px !important;
+  }
+
+  .bellow .row > .col {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  #mpamphs,
+  #lakhs {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+  }
+}
