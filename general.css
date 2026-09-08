@@ -2,6 +2,7 @@ body {
   background-color: rgb(251, 243, 217) !important;
   color: indigo(900) !important;
   padding-top: 80px;
+  font-color: rgb(1, 78, 36);
 }
 /* Navbar */
 
@@ -38,7 +39,7 @@ body {
   font-size: 1rem;
 }
 h1 {
-  color: #052707;
+  color: #073b1d;
   text-align: center;
   padding-top: 50px;
 }
@@ -48,4 +49,10 @@ h1 {
   font-weight: 500;
   font-style: normal;
   font-size: 80px;
+}
+#doit {
+  width: 100%;
+}
+#do {
+  width: 100%;
 }

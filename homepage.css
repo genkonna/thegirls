@@ -3,27 +3,23 @@ body {
   color: indigo(900) !important;
   padding-top: 80px;
 }
-/* Navbar */
 #nav {
   background-color: #5b8661 !important;
   padding: 15px 30px;
   position: fixed;
 }
 
-/* Το όνομα/logo */
 .navbar-brand {
   font-size: 24px;
   font-weight: bold !important;
   color: rgb(1, 78, 36) !important;
 }
 
-/* Τα links */
 .navbar-nav .nav-link {
   color: #052707;
   margin-left: 15px;
 }
 
-/* Όταν περνάει το ποντίκι */
 .navbar-nav .nav-link:hover {
   color: #9fd3c1;
 }
@@ -79,8 +75,4 @@ h1 {
   }
 <<<<<<< Updated upstream
 }
-=======
-}
-/*  Ορίζουν ειδικούς κανόνες για μεγάλες οθόνες. 
-Όταν η οθόνη γίνει μεγαλύτερη από 700px, το ύψος των εικόνων αυξάνεται αυτόματα στα 300px και η γραμματοσειρά του κειμένου μεγαλώνει σε 1.25rem. */
->>>>>>> Stashed changes
+=======>>>>>>> Stashed changes
